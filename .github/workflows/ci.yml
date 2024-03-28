@@ -1,0 +1,16 @@
+name: Test
+on:
+  push
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    name: Testing
+    steps:
+      - id: get-bot-token
+        uses: ./.github/actions/get-bot-token
+
+      - id: use-token
+        run: |
+          members="$(curl -H 'Authorization: Bearer ${{ steps.get-bot-token.outputs.token }}' --retry 5 -s https://api.github.com/orgs/simple-icons/members | jq .[].login | tr '\n' ',' | sed -e 's/"//g' -e 's/,$//')"
+          echo "members=$members" >> $GITHUB_OUTPUT

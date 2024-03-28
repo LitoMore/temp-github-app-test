@@ -1,0 +1,21 @@
+name: Get bot token
+description: Get GitHub App token of simple-icons[bot]
+
+outputs:
+  token:
+    description: Bot token
+    value: ${{ steps.app-token.outputs.token }}
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/create-github-app-token@v1
+      id: app-token
+      with:
+        app-id: ${{ vars.BOT_APP_ID }}
+        private-key: ${{ secrets.BOT_PRIVATE_KEY }}
+        env:
+          APP_TOKEN: ${{ steps.app_token.outputs.token }}
+        shell: sh
+        run: |
+          echo "token=$APP_TOKEN" >> $GITHUB_OUTPUT
