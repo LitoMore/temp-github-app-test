@@ -7,6 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Testing
     steps:
+      - uses: actions/checkout@v4
       - id: get-bot-token
         uses: ./.github/actions/get-bot-token
 
