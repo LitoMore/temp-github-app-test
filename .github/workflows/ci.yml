@@ -7,15 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     name: Testing
     steps:
-      - uses: actions/checkout@v4
-      - id: get-bot-token
-        uses: ./.github/actions/get-bot-token
+      - uses: actions/create-github-app-token@v1
+        id: app-token
         with:
-          app_id: ${{ vars.BOT_APP_ID }}
-          private_key: ${{ secrets.BOT_PRIVATE_KEY }}
-
+          app-id: ${{ vars.BOT_APP_ID }}
+          private-key: ${{ secrets.BOT_PRIVATE_KEY }}
 
       - id: use-token
         run: |
-          members="$(curl -H 'Authorization: Bearer ${{ steps.get-bot-token.outputs.token }}' --retry 5 -s https://api.github.com/orgs/simple-icons/members | jq .[].login | tr '\n' ',' | sed -e 's/"//g' -e 's/,$//')"
+          members="$(curl -H 'Authorization: Bearer ${{ steps.app-token.outputs.token }}' --retry 5 -s https://api.github.com/orgs/simple-icons/members | jq .[].login | tr '\n' ',' | sed -e 's/"//g' -e 's/,$//')"
           echo "members=$members" >> $GITHUB_OUTPUT
