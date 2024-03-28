@@ -1,6 +1,14 @@
 name: Get bot token
 description: Get GitHub App token of simple-icons[bot]
 
+inputs:
+  app_id:
+    decription: GitHub App ID
+    required: true
+  private_key:
+    description: GitHub App Private Key
+    required: true
+
 outputs:
   token:
     description: Bot token

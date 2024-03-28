@@ -10,6 +10,10 @@ jobs:
       - uses: actions/checkout@v4
       - id: get-bot-token
         uses: ./.github/actions/get-bot-token
+        with:
+          app_id: ${{ vars.BOT_APP_ID }}
+          private_key: ${{ secrets.BOT_PRIVATE_KEY }}
+
 
       - id: use-token
         run: |
