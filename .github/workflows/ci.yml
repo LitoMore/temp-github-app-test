@@ -1,12 +1,17 @@
 name: Test
-on:
-  push
+on: push
 
 jobs:
   testing:
     runs-on: ubuntu-latest
     name: Testing
     steps:
+      - uses: actions/checkout@v4
+      - run: realpath $(which corepack)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: realpath $(which corepack)
       - uses: actions/create-github-app-token@v1
         id: app-token
         with:
